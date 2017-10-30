@@ -117,6 +117,7 @@
 {
   type: REMOVE_REPLY,
   replyId,
+  duckId
 }
 
 {
