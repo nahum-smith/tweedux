@@ -1,11 +1,16 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
+import { HomeContainer} from '../../containers'
+import { Navigation } from '../../components'
+import { container } from './styles.css'
 
-class Main extends React.Component {
-  render () {
-    return (
-      <p>Hello Madrisimo</p>
-    )
-  }
+const MainContainer = () => {
+  return (
+    <div className={ container }>
+      <Navigation isAuthed={ false } />
+      <Route path='/' exact={ true } component={ HomeContainer } />
+    </div>
+  )
 }
 
-export default Main
+export default MainContainer

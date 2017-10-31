@@ -1,7 +1,11 @@
 import ReactDOM from 'react-dom'
-import routes from './config/routes'
+import React from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { MainContainer } from './containers'
 
 ReactDOM.render(
-  routes,
+  <BrowserRouter>
+    <Route path='*' component={ MainContainer } />
+  </BrowserRouter>,
   document.getElementById('app')
 )
