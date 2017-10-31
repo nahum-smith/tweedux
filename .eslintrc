@@ -15,7 +15,7 @@
   extends: ["eslint:recommended", "plugin:react/recommended",'standard'],
   plugins: ["react"],
   rules: {
-    "no-console": [2, {allow: ["warn", "error"]}],
+    "no-console": [2, {allow: ["info", "warn", "error"]}],
     "comma-dangle" : [2, "always-multiline"],
     "semi": [2, "never"],
     "no-extra-semi": 2,
