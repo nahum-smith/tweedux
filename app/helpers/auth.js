@@ -7,6 +7,6 @@ export default function auth () {
         uid: 'nahum-smith',
         timestamp: Date.now(),
       })
-    }, 2000)
+    }, 3000)
   })
 }

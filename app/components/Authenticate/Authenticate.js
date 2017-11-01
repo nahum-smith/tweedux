@@ -14,7 +14,7 @@ function Authenticate ({ error, isFetching, onAuth }) {
     <div className={ centeredContainer }>
       <h1 className={ largeHeader }>{'Authenticate'}</h1>
       <FacebookAuthButton
-        isFetching={ false }
+        isFetching={ isFetching }
         onAuth={ onAuth }/>
       {error ? <p className={ errorMsg }>{error}</p> : null}
     </div>
