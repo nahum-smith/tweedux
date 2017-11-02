@@ -1,10 +1,13 @@
 import React from 'react'
 import { Feed } from 'components'
+import { container } from './styles.css'
 
 class FeedContainer extends React.Component {
   render () {
     return (
-      <Feed />
+      <div className={ container }>
+        <Feed />
+      </div>
     )
   }
 }

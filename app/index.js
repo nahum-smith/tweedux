@@ -9,7 +9,21 @@ import thunk from 'redux-thunk'
 
 const store = createStore(userReducer, applyMiddleware(thunk))
 
-console.info(store.getState())
+
+
+function checkAuth (nextState, replace) {
+  const isAuthed = checkIfAuthed(store)
+  const nextPathName = nextState.location.pathname
+  if (nextPathName === '/' || nextPathName === '/auth') {
+    if (isAuthed === true) {
+      replace('/feed')
+    }
+  } else {
+    if (isAuthed !== true) {
+      replace('/auth')
+    }
+  }
+}
 
 ReactDOM.render(
   <Provider store={ store }>

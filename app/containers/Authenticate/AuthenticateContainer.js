@@ -21,7 +21,6 @@ class AuthenticateContainer extends React.Component {
   }
   render () {
     const { error, isFetching } = this.props
-    console.info(this.props)
     return (
       <div>
         <Authenticate

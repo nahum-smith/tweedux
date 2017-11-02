@@ -1,4 +1,5 @@
-import auth from 'helpers/auth'
+import { auth, logout, saveUser } from 'helpers/auth'
+import { formatUserInfo } from 'helpers/utils'
 
 const AUTH_USER = 'AUTH_USER'
 const UNAUTH_USER = 'UNAUTH_USER'
@@ -11,9 +12,9 @@ const authUser = (uid) => ({
   uid,
 })
 
-// const unAuthUser = () => ({
-//   type: UNAUTH_USER,
-// })
+const unAuthUser = () => ({
+  type: UNAUTH_USER,
+})
 
 const fetchingUser = () => ({
   type: FETCHING_USER,
@@ -21,7 +22,7 @@ const fetchingUser = () => ({
 
 const fetchingUserFailure = () => ({
   type: FETCHING_USER_FAILURE,
-  error: 'Error fetching user.',
+  error: 'fetching user error',
 })
 
 const fetchingUserSuccess = (uid, user, timestamp) => ({
@@ -35,9 +36,31 @@ export function fetchAndHandleAuthUser () {
   return function (dispatch) {
     dispatch(fetchingUser())
     return auth()
-      .then((user) => dispatch(fetchingUserSuccess(user.uid, user, Date.now())))
-      .then((user) => dispatch(authUser(user.uid)))
-      .catch((error) => dispatch(fetchingUserFailure(error)))
+      .then(({ user, credential }) => {
+        const userData = user.providerData[0]
+        const userInfo = formatUserInfo(userData.displayName, userData.photoURL, userData.uid)
+        return dispatch(fetchingUserSuccess(userInfo.uid, userInfo, Date.now()))
+      })
+      .then(({ user }) => {
+        console.info(user)
+        return saveUser(user)
+      })
+      .then((snapshot) => {
+        const user = snapshot.val()
+        console.info(user)
+        dispatch(authUser(user.uid))
+      })
+      .catch((error) => {
+        dispatch(fetchingUserFailure(error))
+        console.info(error)
+      })
+  }
+}
+
+export function logoutAndUnauth () {
+  return function (dispatch) {
+    logout()
+    dispatch(unAuthUser())
   }
 }
 const initialUserState = {
