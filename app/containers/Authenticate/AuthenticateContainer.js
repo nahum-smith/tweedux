@@ -32,17 +32,11 @@ class AuthenticateContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.info('state', state)
-  return {
-    error: state.error,
-    isFetching: state.isFetching,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(userActionCreators, dispatch)
-}
+const mapStateToProps = ({ users }) => ({
+  error: users.error,
+  isFetching: users.isFetching,
+})
+const mapDispatchToProps = (dispatch) => bindActionCreators(userActionCreators, dispatch)
 
 export default withRouter(
   connect(

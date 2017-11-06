@@ -20,8 +20,8 @@ class AuthorizedRoute extends React.Component {
   }
 }
 
-const mapStateToProps = ({ isAuthed }) => ({
-  isAuthed,
+const mapStateToProps = ({ users }) => ({
+  isAuthed: users.isAuthed,
 })
 
 export default connect(mapStateToProps)(AuthorizedRoute)

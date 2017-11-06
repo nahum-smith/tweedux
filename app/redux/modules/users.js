@@ -6,31 +6,42 @@ const UNAUTH_USER = 'UNAUTH_USER'
 const FETCHING_USER = 'FETCHING_USER'
 const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
 const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
+const REMOVE_FETCHING_USER = 'REMOVE_FETCHING_USER'
 
-const authUser = (uid) => ({
-  type: AUTH_USER,
-  uid,
-})
+export const authUser = (uid) => {
+  return {
+    type: AUTH_USER,
+    uid,
+  }
+}
 
-const unAuthUser = () => ({
-  type: UNAUTH_USER,
-})
+const unAuthUser = () => {
+  return {
+    type: UNAUTH_USER,
+  }
+}
 
-const fetchingUser = () => ({
-  type: FETCHING_USER,
-})
+const fetchingUser = () => {
+  return {
+    type: FETCHING_USER,
+  }
+}
 
-const fetchingUserFailure = () => ({
-  type: FETCHING_USER_FAILURE,
-  error: 'fetching user error',
-})
+const fetchingUserFailure = () => {
+  return {
+    type: FETCHING_USER_FAILURE,
+    error: 'fetching user error',
+  }
+}
 
-const fetchingUserSuccess = (uid, user, timestamp) => ({
-  type: FETCHING_USER_SUCCESS,
-  uid,
-  user,
-  timestamp,
-})
+export const fetchingUserSuccess = (uid, user, timestamp) => {
+  return {
+    type: FETCHING_USER_SUCCESS,
+    uid,
+    user,
+    timestamp,
+  }
+}
 
 export function fetchAndHandleAuthUser () {
   return function (dispatch) {
@@ -42,13 +53,11 @@ export function fetchAndHandleAuthUser () {
         return dispatch(fetchingUserSuccess(userInfo.uid, userInfo, Date.now()))
       })
       .then(({ user }) => {
-        console.info(user)
         return saveUser(user)
       })
       .then((snapshot) => {
         const user = snapshot.val()
-        console.info(user)
-        dispatch(authUser(user.uid))
+        return dispatch(authUser(user.uid))
       })
       .catch((error) => {
         dispatch(fetchingUserFailure(error))
@@ -61,6 +70,11 @@ export function logoutAndUnauth () {
   return function (dispatch) {
     logout()
     dispatch(unAuthUser())
+  }
+}
+export function removeFetchingUser () {
+  return {
+    type: REMOVE_FETCHING_USER,
   }
 }
 const initialUserState = {
@@ -98,7 +112,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthed: true,
-        authedid: action.uid,
+        authedId: action.uid,
       }
     case UNAUTH_USER :
       return {
@@ -110,6 +124,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
+      }
+    case REMOVE_FETCHING_USER :
+      return {
+        ...state,
+        isFetching: false,
       }
     case FETCHING_USER_FAILURE :
       return {

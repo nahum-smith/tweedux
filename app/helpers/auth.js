@@ -22,10 +22,9 @@ export function checkIfAuthed (store) {
   return store.getState().isAuthed
 }
 export function logout () {
-  console.info('Logged Out!')
+  return firebaseAuth().signOut()
 }
 export function saveUser (user) {
-  console.info('in save', user)
   const userURL = ref.child(`users/${user.uid}`)
   return userURL.set(user).then(() => {
     return userURL.once('value')

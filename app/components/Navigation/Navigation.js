@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { container, navContainer, link } from './styles.css'
+import { Modal } from 'components'
 
 export default function Navigation ({ isAuthed }) {
   return (
@@ -29,7 +30,7 @@ function NavLinks ({isAuthed}) {
 function ActionLinks ({isAuthed}) {
   return isAuthed === true
     ? <ul>
-      <li>{'New Tweed'}</li>
+      <li><Modal /></li>
       <li><Link to='/logout' className={ link }>{'Logout'}</Link></li>
     </ul>
     : <ul>
