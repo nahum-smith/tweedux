@@ -6,7 +6,9 @@ import {
   newTweedTop, pointer, newTweedInputContainer, newTweedInput, submitTweedBtn, darkBtn,
 } from './styles.css'
 import * as modalActionCreators from 'redux/modules/modal'
+import * as tweedActionCreators from 'redux/modules/tweeds'
 import { bindActionCreators } from 'redux'
+import { formatTweed } from 'helpers/utils'
 
 const modalStyles = {
   content: {
@@ -28,13 +30,10 @@ class Modal extends React.Component {
     closeModal: PropTypes.func.isRequired,
     updateTweedText: PropTypes.func.isRequired,
     isSubmitDisabled: PropTypes.bool.isRequired,
-  }
-  componentWillReceiveProps (nextProps) {
-    console.info('next', nextProps)
+    tweedFanout: PropTypes.func.isRequired,
   }
   submitTweed = () => {
-    console.info('Tweed', this.props.tweedText)
-    console.info('user', this.props.user)
+    this.props.tweedFanout(formatTweed(this.props.tweedText, this.props.user))
   }
   render () {
     const { openModal, isOpen, closeModal, updateTweedText, tweedText, isSubmitDisabled } = this.props
@@ -70,15 +69,16 @@ class Modal extends React.Component {
   }
 }
 
-const mapStateToProps = ({ modal, user }) => {
+function mapStateToProps ({modal, users}, props) {
+  const tweedTextLength = modal.tweedText === '' ? 0 : modal.tweedText.length
   return {
+    user: users[users.authedId] ? users[users.authedId].info : {},
     tweedText: modal.tweedText,
     isOpen: modal.isOpen,
-    isSubmitDisabled: modal.isSubmitDisabled,
-    user,
+    isSubmitDisabled: tweedTextLength <= 0 || tweedTextLength > 140,
   }
 }
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(modalActionCreators, dispatch)
+  return bindActionCreators({...modalActionCreators, ...tweedActionCreators}, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Modal)

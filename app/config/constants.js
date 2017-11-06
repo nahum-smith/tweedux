@@ -10,7 +10,10 @@ const config = {
 }
 
 firebase.initializeApp(config)
-console.log(firebase)
+// Provide custom logger which prefixes log statements with "[FIREBASE]"
+firebase.database.enableLogging(function(message) {
+  console.log("[FIREBASE]", message);
+})
 
 export const ref = firebase.database().ref()
 export const firebaseAuth = firebase.auth
