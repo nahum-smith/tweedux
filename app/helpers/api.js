@@ -32,3 +32,14 @@ export function saveTweed (tweed) {
     }
   })
 }
+
+export function listenToFeed (cb, errorCB) {
+  ref.child('tweeds').on('value', (snapshot) => {
+    const feed = snapshot.val() || {}
+    const sortedIds = Object.keys(feed).sort((a, b) => {
+      return feed[b].timestamp - feed[a].timestamp
+    })
+    const args = { feed, sortedIds }
+    cb(args)
+  }, errorCB)
+}

@@ -1,3 +1,7 @@
+import { addListener } from './listeners'
+import { listenToFeed } from 'helpers/api'
+import { addMultipleTweeds } from './tweeds'
+
 const SETTING_FEED_LISTENER = 'SETTING_FEED_LISTENER'
 const SETTING_FEED_LISTENER_ERROR = 'SETTING_FEED_LISTENER_ERROR'
 const SETTING_FEED_LISTENER_SUCCESS = 'SETTING_FEED_LISTENER_SUCCESS'
@@ -38,6 +42,25 @@ export function resetNewTweedsAvailable () {
   }
 }
 
+export function setAndHandleFeedListener () {
+  const initialFetch = true
+  return function (dispatch, getState) {
+    if (getState().listeners.feed === true) {
+      return
+    }
+    dispatch(addListener('feed'))
+    dispatch(settingFeedListener())
+    listenToFeed(({ feed, sortedIds }) => {
+      dispatch(addMultipleTweeds(feed))
+
+      initialFetch === true
+        ? dispatch(settingFeedListenerSuccess(sortedIds))
+        : dispatch(addNewTweedIdToFeed(sortedIds[0]))
+    }, (error) => {
+      return dispatch(settingFeedListenerError(error))
+    })
+  }
+}
 const initialState = {
   newTweedsAvailable: false,
   newTweedsToAdd: [],

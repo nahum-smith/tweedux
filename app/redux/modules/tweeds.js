@@ -74,7 +74,7 @@ export default function tweeds (state = initialState, action) {
       return {
         ...state,
         error: '',
-        isFetching: false,
+        isFetching: true,
       }
     case ADD_TWEED :
     case FETCHING_TWEED_SUCCESS :
