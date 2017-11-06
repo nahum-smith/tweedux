@@ -1,9 +1,3 @@
-
-
-// Ducks
-
-
-
 // Feed
 {
   type: SETTING_FEED_LISTENER,
@@ -27,14 +21,6 @@
 {
   type: RESET_NEW_DUCKS_AVAILABLE,
 }
-
-
-//Listeners
-{
-  type: ADD_LISTENER,
-  listenerId,
-}
-
 
 //Replies
 {
