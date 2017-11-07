@@ -43,3 +43,26 @@ export function listenToFeed (cb, errorCB) {
     cb(args)
   }, errorCB)
 }
+
+export function fetchUsersLikes (uid) {
+  return ref.child(`usersLikes/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
+export function saveToUsersLikes (uid, tweedId) {
+  return ref.child(`usersLikes/${uid}/${tweedId}`).set(true)
+}
+
+export function deleteFromUsersLikes (uid, tweedId) {
+  return ref.child(`usersLikes/${uid}/${tweedId}`).set(null)
+}
+
+export function incrementNumberOfLikes (tweedId) {
+  return ref.child(`likeCount/${tweedId}`)
+    .transaction((currentValue = 0) => currentValue + 1)
+}
+
+export function decrementNumberOfLikes (tweedId) {
+  return ref.child(`likeCount/${tweedId}`)
+    .transaction((currentValue = 0) => currentValue - 1)
+}

@@ -13,6 +13,7 @@ class FeedContainer extends React.Component {
     isFetching: PropTypes.bool.isRequired,
     setAndHandleFeedListener: PropTypes.func.isRequired,
     resetNewTweedsAvailable: PropTypes.func.isRequired,
+    tweedIds: PropTypes.array.isRequired,
   }
   componentDidMount () {
     this.props.setAndHandleFeedListener()
@@ -24,18 +25,20 @@ class FeedContainer extends React.Component {
           newTweedsAvailable={ this.props.newTweedsAvailable }
           error={ this.props.error }
           isFetching={ this.props.isFetching }
-          resetNewDucksAvailable={ this.props.resetNewTweedsAvailable } />
+          resetNewTweedsAvailable={ this.props.resetNewTweedsAvailable }
+          tweedIds={ this.props.tweedIds } />
       </div>
     )
   }
 }
 
 const mapStateToProps = ({ feed }) => {
-  const { newTweedsAvailable, error, isFetching } = feed
+  const { newTweedsAvailable, error, isFetching, tweedIds } = feed
   return {
     newTweedsAvailable,
     error,
     isFetching,
+    tweedIds,
   }
 }
 const mapDispatchToProps = (dispatch) => {

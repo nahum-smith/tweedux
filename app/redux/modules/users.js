@@ -35,6 +35,7 @@ const fetchingUserFailure = () => {
 }
 
 export const fetchingUserSuccess = (uid, user, timestamp) => {
+  console.info('fetching uid', uid)
   return {
     type: FETCHING_USER_SUCCESS,
     uid,
@@ -49,14 +50,17 @@ export function fetchAndHandleAuthUser () {
     return auth()
       .then(({ user, credential }) => {
         const userData = user.providerData[0]
-        const userInfo = formatUserInfo(userData.displayName, userData.photoURL, userData.uid)
-        return dispatch(fetchingUserSuccess(userInfo.uid, userInfo, Date.now()))
+        console.info('HERE', userData, user)
+        const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
+        return dispatch(fetchingUserSuccess(user.uid, userInfo, Date.now()))
       })
       .then(({ user }) => {
+        console.info('Here2', user)
         return saveUser(user)
       })
       .then((snapshot) => {
         const user = snapshot.val()
+        console.info('snap', user)
         return dispatch(authUser(user.uid))
       })
       .catch((error) => {

@@ -13,6 +13,7 @@ const store = createStore(combineReducers(reducers), compose(
   applyMiddleware(thunk, logger),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ))
+console.info(store.getState())
 /* eslint-enable */
 
 // function checkAuth (nextState, replace) {

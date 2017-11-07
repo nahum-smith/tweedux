@@ -3,7 +3,7 @@ const FETCHING_USERS_TWEEDS_ERROR = 'FETCHING_USERS_TWEEDS_ERROR'
 const FETCHING_USERS_TWEEDS_SUCCESS = 'FETCHING_USERS_TWEEDS_SUCCESS'
 const ADD_SINGLE_USERS_TWEED = 'ADD_SINGLE_USERS_TWEED'
 
-export function fetchingUsersDucks (uid) {
+export function fetchingUsersTweeds (uid) {
   return {
     type: FETCHING_USERS_TWEEDS,
     uid,

@@ -1,12 +1,14 @@
 import React from 'react'
 import { Home } from 'components'
-import { container } from './styles.css'
+import { container, background } from './styles.css'
 
 class HomeContainer extends React.Component {
   render () {
     return (
-      <div className={ container }>
-        <Home />
+      <div className={ background } >
+        <div className={ container }>
+          <Home />
+        </div>
       </div>
     )
   }
