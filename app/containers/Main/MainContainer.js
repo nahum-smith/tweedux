@@ -22,9 +22,7 @@ class MainContainer extends React.Component {
     location: PropTypes.object.isRequired,
     setUsersLikes: PropTypes.func.isRequired,
   }
-  componentWillMount () {
-    console.info('about to mount')
-  }
+
   componentDidMount () {
     const { authUser, fetchingUserSuccess, removeFetchingUser, setUsersLikes, history, location } = this.props
     firebaseAuth().onAuthStateChanged((user) => {
@@ -42,14 +40,7 @@ class MainContainer extends React.Component {
       }
     })
   }
-  componentWillReceiveProps (nextProps) {
-    console.info('will receive props')
-  }
-  componentWillUnmount () {
-    console.info('will unmount')
-  }
   render () {
-    console.info('rendering container')
     return this.props.isFetching === true
       ? null
       : (

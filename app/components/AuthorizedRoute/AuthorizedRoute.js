@@ -12,7 +12,7 @@ class AuthorizedRoute extends React.Component {
     const { component: Component, isAuthed, ...rest } = this.props
     return (
       <Route { ...rest } render = { props => {
-        return isAuthed
+        return isAuthed === true
           ? <Component { ...this.props } />
           : <Redirect to='/auth' />
       } } />

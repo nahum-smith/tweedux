@@ -50,17 +50,14 @@ export function fetchAndHandleAuthUser () {
     return auth()
       .then(({ user, credential }) => {
         const userData = user.providerData[0]
-        console.info('HERE', userData, user)
         const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
         return dispatch(fetchingUserSuccess(user.uid, userInfo, Date.now()))
       })
       .then(({ user }) => {
-        console.info('Here2', user)
         return saveUser(user)
       })
       .then((snapshot) => {
         const user = snapshot.val()
-        console.info('snap', user)
         return dispatch(authUser(user.uid))
       })
       .catch((error) => {
