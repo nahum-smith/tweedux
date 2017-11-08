@@ -43,7 +43,7 @@ export function resetNewTweedsAvailable () {
 }
 
 export function setAndHandleFeedListener () {
-  const initialFetch = true
+  let initialFetch = true
   return function (dispatch, getState) {
     if (getState().listeners.feed === true) {
       return
@@ -56,6 +56,7 @@ export function setAndHandleFeedListener () {
       initialFetch === true
         ? dispatch(settingFeedListenerSuccess(sortedIds))
         : dispatch(addNewTweedIdToFeed(sortedIds[0]))
+      initialFetch = false
     }, (error) => {
       return dispatch(settingFeedListenerError(error))
     })

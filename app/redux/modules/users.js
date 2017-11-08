@@ -1,5 +1,6 @@
 import { auth, logout, saveUser } from 'helpers/auth'
 import { formatUserInfo } from 'helpers/utils'
+import { fetchUser } from 'helpers/api'
 
 const AUTH_USER = 'AUTH_USER'
 const UNAUTH_USER = 'UNAUTH_USER'
@@ -43,7 +44,17 @@ export const fetchingUserSuccess = (uid, user, timestamp) => {
     timestamp,
   }
 }
-
+export function fetchAndHandleUser (uid) {
+  return function (dispatch) {
+    dispatch(fetchingUser())
+    return fetchUser(uid)
+      .then(user => {
+        console.info(user)
+        dispatch(fetchingUserSuccess(uid, user, Date.now()))
+      })
+      .catch(error => dispatch(fetchingUserFailure(error)))
+  }
+}
 export function fetchAndHandleAuthUser () {
   return function (dispatch) {
     dispatch(fetchingUser())

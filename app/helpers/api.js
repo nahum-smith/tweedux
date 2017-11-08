@@ -66,3 +66,13 @@ export function decrementNumberOfLikes (tweedId) {
   return ref.child(`likeCount/${tweedId}`)
     .transaction((currentValue = 0) => currentValue - 1)
 }
+
+export function fetchUser (uid) {
+  return ref.child(`users/${uid}`).once('value')
+    .then((snapshot) => snapshot.val())
+}
+
+export function fetchUsersTweeds (uid) {
+  return ref.child(`usersTweeds/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
-import { HomeContainer, AuthenticateContainer, FeedContainer, LogoutContainer } from 'containers'
+import {
+  HomeContainer, AuthenticateContainer, FeedContainer,
+  LogoutContainer, UserContainer } from 'containers'
 import { Navigation, AuthorizedRoute } from 'components'
 import { container } from './styles.css'
 import * as userActionCreators from 'redux/modules/users'
@@ -50,6 +52,7 @@ class MainContainer extends React.Component {
             <Route path='/' exact={ true } component={ HomeContainer } />
             <Route path='/auth' exact={ true } component={ AuthenticateContainer } />
             <AuthorizedRoute path='/feed' component={ FeedContainer } />
+            <AuthorizedRoute path='/:uid' component= { UserContainer} />
             <Route path='/logout' component={ LogoutContainer } />
           </Switch>
         </div>

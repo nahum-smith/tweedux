@@ -1,3 +1,5 @@
+import { userExpirationlength, usersTweedsExpirationLength } from 'config/constants'
+
 export const formatUserInfo = (name, avatar, uid) => {
   return {
     name,
@@ -18,4 +20,15 @@ export const formatTweed = (text, { name, avatar, uid }) => {
 export function formatTimeStamp (timestamp) {
   const date = new Date(timestamp)
   return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+}
+
+function getMilliseconds (timestamp) {
+  return new Date().getTime - new Date(timestamp).getTime()
+}
+export function staleUser (timestamp) {
+  return getMilliseconds(timestamp) > userExpirationlength
+}
+
+export function staleTweeds (timestamp) {
+  return getMilliseconds(timestamp) > usersTweedsExpirationLength
 }

@@ -1,3 +1,6 @@
+import { addMultipleTweeds } from './tweeds'
+import { fetchUsersTweeds } from 'helpers/api'
+
 const FETCHING_USERS_TWEEDS = 'FETCHING_USERS_TWEEDS'
 const FETCHING_USERS_TWEEDS_ERROR = 'FETCHING_USERS_TWEEDS_ERROR'
 const FETCHING_USERS_TWEEDS_SUCCESS = 'FETCHING_USERS_TWEEDS_SUCCESS'
@@ -49,6 +52,21 @@ function usersTweed (state = initialUsersTweedState, action) {
       }
     default :
       return state
+  }
+}
+export function fetchAndHandleUsersTweeds (uid) {
+  return function (dispatch, getState) {
+    dispatch(fetchingUsersTweeds())
+
+    fetchUsersTweeds(uid)
+      .then(tweeds => dispatch(addMultipleTweeds(tweeds)))
+      .then(({ tweeds }) => dispatch(
+        fetchingUsersTweedsSuccess(
+          uid,
+          Object.keys(tweeds).sort((a, b) => tweeds[b].timestamp - tweeds[a].timestamp),
+          Date.now())
+      ))
+      .catch((error) => dispatch(fetchingUsersTweedsError(error)))
   }
 }
 
