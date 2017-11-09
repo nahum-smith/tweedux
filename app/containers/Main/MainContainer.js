@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import {
   HomeContainer, AuthenticateContainer, FeedContainer,
-  LogoutContainer, UserContainer } from 'containers'
+  LogoutContainer, UserContainer, TweedDetailsContainer } from 'containers'
 import { Navigation, AuthorizedRoute } from 'components'
 import { container } from './styles.css'
 import * as userActionCreators from 'redux/modules/users'
@@ -52,8 +52,10 @@ class MainContainer extends React.Component {
             <Route path='/' exact={ true } component={ HomeContainer } />
             <Route path='/auth' exact={ true } component={ AuthenticateContainer } />
             <AuthorizedRoute path='/feed' component={ FeedContainer } />
-            <AuthorizedRoute path='/:uid' component= { UserContainer} />
+            <AuthorizedRoute path='/tweedDetail/:tweedId' component={ TweedDetailsContainer } />
+            <AuthorizedRoute path='/:uid' exact={ true } component={ UserContainer } />
             <Route path='/logout' component={ LogoutContainer } />
+            <Route render={ () => <h1>{'404: Not Found'}</h1> } />
           </Switch>
         </div>
       )

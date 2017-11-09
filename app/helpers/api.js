@@ -76,3 +76,20 @@ export function fetchUsersTweeds (uid) {
   return ref.child(`usersTweeds/${uid}`).once('value')
     .then((snapshot) => snapshot.val() || {})
 }
+export function fetchTweed (tweedId) {
+  return ref.child(`tweeds/${tweedId}`).once('value')
+    .then((snapshot) => snapshot.val())
+}
+export function fetchTweedLikeCount (tweedId) {
+  return ref.child(`likeCount/${tweedId}`).once('value')
+    .then((snapshot) => snapshot.val() || 0)
+}
+export function postReply (tweedId, reply) {
+  const replyId = ref.child(`replies/${tweedId}`).push().key
+  const replyWithId = {...reply, replyId}
+  const replyPromise = ref.child(`replies/${tweedId}/${replyId}`).set(replyWithId)
+  return {
+    replyWithId,
+    replyPromise,
+  }
+}

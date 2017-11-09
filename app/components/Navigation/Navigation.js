@@ -22,7 +22,8 @@ Navigation.propTypes = ActionLinks.propTypes = NavLinks.propTypes = {
 function NavLinks ({isAuthed}) {
   return isAuthed === true
     ? <ul>
-      <li><Link to='/' className={ link }>{'Home'}</Link></li>
+      <li><Link to='/' className={ link }>{'Tweedux'}</Link></li>
+      <li><Link to='/feed' className={ link }>{'Dashboard'}</Link></li>
     </ul>
     : <noscript />
 }

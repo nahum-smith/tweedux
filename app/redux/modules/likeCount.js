@@ -1,4 +1,5 @@
 import { ADD_LIKE, REMOVE_LIKE } from './usersLikes'
+import { fetchTweedLikeCount } from 'helpers/api'
 const FETCHING_COUNT = 'FETCHING_COUNT'
 const FETCHING_COUNT_ERROR = 'FETCHING_COUNT_ERROR'
 const FETCHING_COUNT_SUCCESS = 'FETCHING_COUNT_SUCCESS'
@@ -35,7 +36,13 @@ export function count (state = 0, action) {
       return state
   }
 }
-
+export function initLikeFetch (tweedId) {
+  return function (dispatch) {
+    dispatch(fetchingCount())
+    fetchTweedLikeCount(tweedId)
+      .then((likeCount) => dispatch(fetchingCountSuccess(tweedId, likeCount)))
+  }
+}
 const initialState = {
   isFetching: false,
   error: '',

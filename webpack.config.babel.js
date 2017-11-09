@@ -5,12 +5,12 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
   filenmame: 'index.html',
-  inject: 'body'
+  inject: 'body',
 })
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'dist')
+  build: path.join(__dirname, 'dist'),
 }
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
@@ -19,22 +19,22 @@ const isProduction = LAUNCH_COMMAND === 'production'
 
 const base = {
   entry: [
-    PATHS.app
+    PATHS.app,
   ],
   output: {
     path: PATHS.build,
-    filename: 'index_bundle.js'
+    filename: 'index_bundle.js',
   },
   module: {
     loaders: [
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.css$/, loader: 'style-loader!css-loader?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'},
-      {test: /\.jpeg$/, loader: 'url-loader'}
-    ]
+      {test: /\.jpeg$/, loader: 'url-loader'},
+    ],
   },
   resolve: {
-    modules: ['node_modules', path.resolve(__dirname, 'app')]
-  }
+    modules: ['node_modules', path.resolve(__dirname, 'app')],
+  },
 }
 
 const productionConfig = {
@@ -43,10 +43,10 @@ const productionConfig = {
     HtmlWebpackPluginConfig,
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    })
-  ]
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+  ],
 }
 
 const developmentConfig = {
@@ -56,9 +56,9 @@ const developmentConfig = {
     hot: true,
     inline: true,
     progress: true,
-    historyApiFallback: true
+    historyApiFallback: {index: path.join(__dirname, 'dist/index.html')},
   },
-  plugins: [HtmlWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
+  plugins: [HtmlWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()],
 }
 
 export default Object.assign({}, base, isProduction === true ? productionConfig : developmentConfig)

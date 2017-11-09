@@ -32,3 +32,13 @@ export function staleUser (timestamp) {
 export function staleTweeds (timestamp) {
   return getMilliseconds(timestamp) > usersTweedsExpirationLength
 }
+
+export function formatReply ({ name, uid, avatar }, reply) {
+  return {
+    name,
+    reply,
+    uid,
+    avatar,
+    timestamp: Date.now(),
+  }
+}

@@ -1,4 +1,4 @@
-import { saveTweed } from 'helpers/api'
+import { saveTweed, fetchTweed } from 'helpers/api'
 import { closeModal } from './modal'
 import { addSingleUsersTweed } from './usersTweeds'
 
@@ -48,7 +48,13 @@ export function addMultipleTweeds (tweeds) {
     tweeds,
   }
 }
-
+export function fetchAndHandleTweed (tweedId) {
+  return function (dispatch) {
+    dispatch(fetchingTweed())
+    fetchTweed(tweedId)
+      .then((tweed) => dispatch(fetchingTweedSuccess(tweed)))
+  }
+}
 export function tweedFanout (tweed) {
   return function (dispatch, getState) {
     const uid = getState().users.authId
