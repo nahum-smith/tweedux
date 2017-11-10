@@ -4,7 +4,7 @@ import {
   mainContainer, container, content, repliesContainer,
   replyTextAreaContainer, replyTextArea } from './styles.css'
 import { subHeader, darkBtn, errorMsg } from 'sharedStyles/styles.css'
-import { TweedContainer } from 'containers'
+import { TweedContainer, RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
 import { addAndHandleReply } from 'redux/modules/replies'
 
@@ -45,7 +45,7 @@ const TweedDetails = ({ isFetching, tweedId, authedUser, error, addAndHandleRepl
             <Reply submit={ (replyText) => addAndHandleReply(tweedId, formatReply(authedUser, replyText)) }/>
           </div>
           <div className={ repliesContainer }>
-            {'Reply Section'}
+            <RepliesContainer tweedId={ tweedId }/>
           </div>
         </div>}
       {error ? <p className={ errorMsg }>{ error }</p> : null}

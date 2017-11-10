@@ -93,3 +93,7 @@ export function postReply (tweedId, reply) {
     replyPromise,
   }
 }
+export function fetchReplies (tweedId) {
+  return ref.child(`replies/${tweedId}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}

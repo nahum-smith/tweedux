@@ -31,6 +31,7 @@ store.subscribe(throttle(() => {
 
 persistedState.users.isAuthed === true && store.dispatch(authUser(persistedState.users.authedId))
 
+console.info(store.getState())
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>

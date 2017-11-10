@@ -1,4 +1,4 @@
-import { userExpirationlength, usersTweedsExpirationLength } from 'config/constants'
+import { userExpirationlength, usersTweedsExpirationLength, repliesExpirationLength } from 'config/constants'
 
 export const formatUserInfo = (name, avatar, uid) => {
   return {
@@ -31,6 +31,9 @@ export function staleUser (timestamp) {
 
 export function staleTweeds (timestamp) {
   return getMilliseconds(timestamp) > usersTweedsExpirationLength
+}
+export function staleReplies (timestamp) {
+  return getMilliseconds(timestamp) > repliesExpirationLength
 }
 
 export function formatReply ({ name, uid, avatar }, reply) {

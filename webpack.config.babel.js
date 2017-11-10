@@ -56,7 +56,7 @@ const developmentConfig = {
     hot: true,
     inline: true,
     progress: true,
-    historyApiFallback: {index: path.join(__dirname, 'dist/index.html')},
+    historyApiFallback: true,
   },
   plugins: [HtmlWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()],
 }

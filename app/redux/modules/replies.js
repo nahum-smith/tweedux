@@ -1,4 +1,4 @@
-import { postReply } from 'helpers/api'
+import { postReply, fetchReplies } from 'helpers/api'
 
 const FETCHING_REPLIES = 'FETCHING_REPLIES'
 const FETCHING_REPLIES_ERROR = 'FETCHING_REPLIES_ERROR'
@@ -52,7 +52,15 @@ function fetchingRepliesSuccess (tweedId, replies) {
     lastUpdated: Date.now(),
   }
 }
+export function fetchAndHandleReplies (tweedId) {
+  return function (dispatch, getState) {
+    dispatch(fetchingReplies())
 
+    fetchReplies(tweedId)
+      .then((replies) => dispatch(fetchingRepliesSuccess(tweedId, replies, Date.now())))
+      .catch((error) => dispatch(fetchingRepliesError(error)))
+  }
+}
 export function addAndHandleReply (tweedId, reply) {
   return function (dispatch, getState) {
     const { replyWithId, replyPromise } = postReply(tweedId, reply)
